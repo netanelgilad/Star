@@ -1,0 +1,35 @@
+{
+  "name": "angular-desktop-app",
+  "description": "Desktop application developed using AngularJS and web technologies. Powered by node-webkit",
+  "version": "1.2.0",
+  "main": "index.html",
+  "author":{
+      "name": "Joel Grenon",
+      "url": "https://github.com/jgrenon"
+  },
+  "contributors":[{
+        "name": "Tom Lawson",
+        "url" : "https://github.com/talss89"
+    }],
+  "window": {
+    "toolbar": true,
+    "width": 1200,
+    "height": 960,
+    "icon":"images/favicon.ico"
+  },
+  "dependencies": {
+    "jade": "~0.35.0",
+    "passport": "~0.1.17",
+    "passport-twitter": "~1.0.2",
+    "request": "~2.27.0",
+    "querystring": "~0.2.0",
+    "moment": "~2.4.0",
+    "shortid": "~2.0.0",
+    "tungus": "0.0.2",
+    "mongoose": "~3.8.7"
+  },
+  "scripts":{
+    "postinstall" : "node ../etc/scripts/postinstall.js"
+  }
+
+}

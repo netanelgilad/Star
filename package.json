@@ -2,12 +2,10 @@
   "name": "star-build",
   "description": "Star Build System",
   "version": "1.0.0",
-  "author":{
-      "name": "Netanel Gilad",
-      "url" : "https://github.com/talss89"
+  "author": {
+    "name": "Netanel Gilad"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-less": "~0.8.3",

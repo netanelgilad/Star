@@ -15,6 +15,7 @@
     "less": "~1.5.1",
     "jquery": "~2.0.3",
     "angular-bootstrap": "~0.10.0",
-    "angular-ui-router": "angular-ui-router#0.2.8-bowratic-tedium"
+    "angular-ui-router": "angular-ui-router#0.2.8-bowratic-tedium",
+    "angular-ui-select2": "~0.0.5"
   }
 }

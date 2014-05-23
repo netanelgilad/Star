@@ -5,8 +5,7 @@
 define([
     'require',
     'angular',
-    'angular-ui-router',
-    'app'
+    'modules/star-app/index'
 ], function (require, ng) {
     'use strict';
 
@@ -16,6 +15,6 @@ define([
      */
 
     require(['domReady!'], function (document) {
-        ng.bootstrap(document, ['app']);
+        ng.bootstrap(document, ['starApp']);
     });
 });

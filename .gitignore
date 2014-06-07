@@ -3,6 +3,7 @@ node_modules
 *.db
 data
 .idea
+.idea/*
 releases/
 cache/
 
@@ -12,3 +13,8 @@ cache/
 nbproject
 lib/
 
+.DS_Store
+src/.DS_Store
+src/js/.DS_Store
+src/css/.DS_Store
+src/*.log*

@@ -9,6 +9,7 @@ define([
     './dependencies/httpDependency',
     './dependencies/jqueryDependency',
     './dependencies/lodashDependency',
+    './dependencies/log4jsDependency',
     './tasks/basicAuthentication',
     './tasks/capitalizeWords',
     './tasks/cssSelect',

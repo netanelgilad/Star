@@ -25,76 +25,17 @@ define([
                     {
                         type : 'parameters',
                         from : 'tvShow',
-                        to : 'stringToCapitalize'
+                        to : 'tvShow'
                     }
                 ],
-                'capitalizeWords',
-                [
-                    {
-                        type : 'connection',
-                        from : 'capitalizedString',
-                        to : 'sourceString'
-                    },
-                    {
-                        type : 'fixed',
-                        value : ' ',
-                        to : 'stringToReplace'
-                    },
-                    {
-                        type : 'fixed',
-                        value : '_',
-                        to : 'stringToInsert'
-                    }
-                ],
-                'stringReplace',
-                [
-                    {
-                        type : 'fixed',
-                        value : 'http://www.sidereel.com/',
-                        to : 'firstString'
-                    },
-                    {
-                        type : 'connection',
-                        from : 'replacedString',
-                        to : 'secondString'
-                    }
-                ],
-                'stringConcat',
-                [
-                    {
-                        type : 'connection',
-                        from : 'fullString',
-                        to : 'pageURL'
-                    }
-                ],
-                'getHTMLPage',
-                [
-                    {
-                        type : 'connection',
-                        from : 'htmlString',
-                        to : 'HTMLString'
-                    },
-                    {
-                        type : 'fixed',
-                        value : '#episode-selector li:nth-last-child(1) .episode-label a',
-                        to : 'cssSelection'
-                    },
-                    {
-                        type : 'fixed',
-                        value : 'first',
-                        to : 'selectionOption'
-                    },
-                    {
-                        type : 'fixed',
-                        value : true,
-                        to : 'inner'
-                    }
-                ],
-                'cssSelect',
+                {
+                    type : 'process',
+                    executeable : 'findLatestEpisodeOfATvShowUsingSidereel'
+                },
                 [
                     {
                         type: 'connection',
-                        from : 'selectedHTML',
+                        from : 'episodeTitle',
                         to : 'sourceString'
                     },
                     {
@@ -108,7 +49,10 @@ define([
                         to : 'stringToInsert'
                     }
                 ],
-                'stringReplace',
+                {
+                    type : 'task',
+                    executeable : 'stringReplace'
+                },
                 [
                     {
                         type : 'connection',
@@ -126,7 +70,10 @@ define([
                         to : 'stringToInsert'
                     }
                 ],
-                'stringReplace',
+                {
+                    type : 'task',
+                    executeable : 'stringReplace'
+                },
                 [
                     {
                         type : 'toMemory',
@@ -149,7 +96,10 @@ define([
                         to: 'password'
                     }
                 ],
-                'basicAuthenticate',
+                {
+                    type : 'task',
+                    executeable : 'basicAuthenticate'
+                },
                 [
                     {
                         type : 'toMemory',
@@ -172,7 +122,10 @@ define([
                         to : 'stringToInsert'
                     }
                 ],
-                'stringReplace',
+                {
+                    type : 'task',
+                    executeable : 'stringReplace'
+                },
                 [
                     {
                         type : 'connection',
@@ -185,7 +138,10 @@ define([
                         to : 'secondString'
                     }
                 ],
-                'stringConcat',
+                {
+                    type : 'task',
+                    executeable : 'stringConcat'
+                },
                 [
                     {
                         type : 'connection',
@@ -198,7 +154,10 @@ define([
                         to : 'secondString'
                     }
                 ],
-                'stringConcat',
+                {
+                    type : 'task',
+                    executeable : 'stringConcat'
+                },
                 [
                     {
                         type : 'fixed',
@@ -211,7 +170,10 @@ define([
                         to : 'secondString'
                     }
                 ],
-                'stringConcat',
+                {
+                    type : 'task',
+                    executeable : 'stringConcat'
+                },
                 [
                     {
                         type : 'connection',
@@ -229,7 +191,10 @@ define([
                         to : 'referer'
                     }
                 ],
-                'getHTMLPage',
+                {
+                    type : 'task',
+                    executeable : 'getHTMLPage'
+                },
                 [
                     {
                         type : 'connection',
@@ -252,7 +217,10 @@ define([
                         to : 'inner'
                     }
                 ],
-                'cssSelect',
+                {
+                    type : 'task',
+                    executeable : 'cssSelect'
+                },
                 [
                     {
                         type : 'connection',
@@ -274,7 +242,10 @@ define([
                         to : 'config'
                     }
                 ],
-                'htmlsToObjects',
+                {
+                    type : 'task',
+                    executeable : 'htmlsToObjects'
+                },
                 [
                     {
                         type : 'connection',
@@ -287,7 +258,10 @@ define([
                         to : 'property'
                     }
                 ],
-                'getMax',
+                {
+                    type : 'task',
+                    executeable : 'getMax'
+                },
                 [
                     {
                         type : 'return',

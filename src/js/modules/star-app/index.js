@@ -17,5 +17,6 @@ define([
     './tasks/htmlsToObjects',
     './tasks/stringConcat',
     './tasks/stringReplace',
-    './processes/torrentleechProcess'
+    './processes/torrentleechProcess',
+    './processes/latestEpisodeFromSidereelProcess'
 ], function () {});

@@ -15,7 +15,7 @@ define([
         log4js.configure({
             appenders: [
                 { type: 'file', filename: 'root.log', maxLogSize: 20480, backups: 0},], // currently, the root.log file is src dir.
-            replaceConsole: true
+            replaceConsole: false
         });
     });
 });

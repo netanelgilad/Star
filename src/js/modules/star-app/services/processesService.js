@@ -6,9 +6,10 @@ define([
     './Environment',
     'jquery',
     './tasksService',
-    './dependenciesService'
+    './dependenciesService',
+    './adaptersService'
 ], function(module, Environment) {
-    module.service('processesService', function(tasksService, dependenciesService, $q) {
+    module.service('processesService', function(tasksService, dependenciesService, adaptersService, $q) {
         this.processes = {};
 
         this.registerProcess = function(process) {
@@ -26,28 +27,40 @@ define([
                 currEnv.deffered.reject(taskName + " was not found!");
             }
             else {
+                if (typeof currTask.adapter !== 'undefined') {
+                    var adapter = adaptersService.getAdapter(currTask.adapter.name);
+                    // TODO: deal with adapter not found
 
-                // set the task args
-                var funcArgs = [];
+                    var taskConfig = currTask.adapter.config;
+                    // TODO: handle adapter task params better?
+                    taskConfig.parameters = nextArgs;
+                    taskConfig.returns = currTask.returns;
 
-                if (typeof(currTask.parameters) !== "undefined") {
-                    currTask.parameters.forEach(function (param) {
-                        funcArgs.push(nextArgs[param.name]);
-                    });
+                    adapter.runTask(taskConfig, currEnv);
                 }
+                else {
+                    // set the task args
+                    var funcArgs = [];
 
-                // get the dependecies
-                if (typeof(currTask.dependencies) !== "undefined") {
-                    currTask.dependencies.forEach(function (dep) {
-                        funcArgs.push(dependenciesService.getDependency(dep));
-                    });
+                    if (typeof(currTask.parameters) !== "undefined") {
+                        currTask.parameters.forEach(function (param) {
+                            funcArgs.push(nextArgs[param.name]);
+                        });
+                    }
+
+                    // get the dependecies
+                    if (typeof(currTask.dependencies) !== "undefined") {
+                        currTask.dependencies.forEach(function (dep) {
+                            funcArgs.push(dependenciesService.getDependency(dep));
+                        });
+                    }
+
+                    // add the env
+                    funcArgs.push(currEnv);
+
+                    // execute the task
+                    currTask.executeFn.apply({}, funcArgs);
                 }
-
-                // add the env
-                funcArgs.push(currEnv);
-
-                // execute the task
-                currTask.executeFn.apply({}, funcArgs);
             }
 
             return currEnv.deffered.promise;
@@ -78,6 +91,7 @@ define([
 
                 // execute the connectiom
                 processDef.process[executableSerial].forEach(function(currMap) {
+                    // TODO:  handle connections in a more normal way...
                     if (currMap.type === 'parameters') {
                         nextArgs[currMap.to] = parameters[currMap.from];
                     }
@@ -118,7 +132,7 @@ define([
                     }
 
                     executionPromise.then(function(result) {
-                        console.log(JSON.stringify(result));
+                        console.log(JSON.stringify(result, null, 2));
                         lastReturn = result;
 
                         if (executableSerial + 2 < processDef.process.length) {

@@ -10,6 +10,7 @@ define([
     './dependencies/jqueryDependency',
     './dependencies/lodashDependency',
     './dependencies/log4jsDependency',
+    './dependencies/fsDependency',
     './tasks/basicAuthentication',
     './tasks/capitalizeWords',
     './tasks/cssSelect',
@@ -18,6 +19,10 @@ define([
     './tasks/htmlsToObjects',
     './tasks/stringConcat',
     './tasks/stringReplace',
+    './tasks/getProperty',
+    './tasks/downloadFile',
+    './tasks/downloadTorrentFileInVuze',
     './processes/torrentleechProcess',
-    './processes/latestEpisodeFromSidereelProcess'
+    './processes/latestEpisodeFromSidereelProcess',
+    './adapters/restAdapter'
 ], function () {});

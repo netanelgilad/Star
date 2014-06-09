@@ -237,6 +237,11 @@ define([
                             {
                                 name : 'seeders',
                                 selector : '.seeders'
+                            },
+                            {
+                                name : 'url',
+                                selector : 'td.quickdownload a',
+                                attribute : 'href'
                             }
                         ],
                         to : 'config'
@@ -264,10 +269,101 @@ define([
                 },
                 [
                     {
-                        type : 'return',
+                        type : 'connection',
                         from : 'maxObject',
-                        to : 'torrentName'
+                        to : 'object'
+                    },
+                    {
+                        type : 'fixed',
+                        value : 'url',
+                        to : 'propertyName'
                     }
+                ],
+                {
+                    type : 'task',
+                    executeable : 'getProperty'
+                },
+                [
+                    {
+                        type : 'fixed',
+                        value : 'http://torrentleech.org',
+                        to : 'firstString'
+                    },
+                    {
+                        type : 'connection',
+                        from : 'property',
+                        to : 'secondString'
+                    }
+                ],
+                {
+                    type : 'task',
+                    executeable : 'stringConcat'
+                },
+                [
+                    {
+                        type : 'toMemory',
+                        from : 'fullString',
+                        to : 'torrentDownloadURL'
+                    },
+                    {
+                        type : 'fixed',
+                        value : 'http://www.torrentleech.org/user/account/login/',
+                        to : 'authenticationURL'
+                    },
+                    {
+                        type : 'fixed',
+                        value : 'natk',
+                        to : 'username'
+                    },
+                    {
+                        type : 'fixed',
+                        value : 'Ngr4evr90%21',
+                        to: 'password'
+                    }
+                ],
+                {
+                    type : 'task',
+                    executeable : 'basicAuthenticate'
+                },
+                [
+                    {
+                        type : 'fromMemory',
+                        from : 'torrentDownloadURL',
+                        to : 'fileURL'
+                    },
+                    {
+                        type : 'fixed',
+                        value : 'C:\\temp\\tempTorrent.torrent',
+                        to : 'targetFilePath'
+                    },
+                    {
+                        type : 'connection',
+                        from : 'authenticationCookie',
+                        to : 'cookie'
+                    },
+                    {
+                        type : 'fixed',
+                        value : 'http://www.torrentleech.org/torrents/browse',
+                        to : 'referer'
+                    }
+                ],
+                {
+                    type : 'task',
+                    executeable : 'downloadFile'
+                },
+                [
+                    {
+                        type : 'fixed',
+                        value : 'C:\\temp\\tempTorrent.torrent',
+                        to : 'torrentFilePath'
+                    }
+                ],
+                {
+                    type : 'task',
+                    executeable : 'downloadTorrentInVuze'
+                },
+                [
+
                 ]
             ]
         });

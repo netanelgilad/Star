@@ -12,7 +12,7 @@ define([
         $scope.obj = {};
 
         $scope.do = function () {
-            processesService.executeProcess('getTorrentOfLastEpisodeOfATVShow', { tvShow : 'the walking dead' });
+            processesService.executeProcess('getTorrentOfLastEpisodeOfATVShow', { tvShow : 'parenthood' });
         };
 
         $scope.that = function() {

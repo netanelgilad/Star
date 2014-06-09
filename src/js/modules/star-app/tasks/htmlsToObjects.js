@@ -35,7 +35,12 @@ define([
                     var returnObj = {};
 
                     config.forEach(function(prop) {
-                        returnObj[prop.name] = JQuery(htmlString).find(prop.selector).first().html();
+                        if (typeof prop.attribute !== 'undefined') {
+                            returnObj[prop.name] = JQuery(htmlString).find(prop.selector).first().attr(prop.attribute);
+                        }
+                        else {
+                            returnObj[prop.name] = JQuery(htmlString).find(prop.selector).first().html();
+                        }
                     });
 
                     objects.push(returnObj);

@@ -6,6 +6,7 @@ define([
     './services/tasksService',
     './services/processesService',
     './services/dependenciesService',
+    './services/searchService',
     './dependencies/httpDependency',
     './dependencies/jqueryDependency',
     './dependencies/lodashDependency',
@@ -22,7 +23,11 @@ define([
     './tasks/getProperty',
     './tasks/downloadFile',
     './tasks/downloadTorrentFileInVuze',
+    './tasks/getByIndex',
+    './tasks/findLast',
+    './tasks/canonizeEpisodeTitle',
     './processes/torrentleechProcess',
     './processes/latestEpisodeFromSidereelProcess',
+    './processes/searchInSidereelProcess',
     './adapters/restAdapter'
 ], function () {});

@@ -41,6 +41,10 @@ define([
                         else {
                             returnObj[prop.name] = JQuery(htmlString).find(prop.selector).first().html();
                         }
+
+                        if (typeof prop.type !== 'undefined') {
+                            returnObj[prop.name] = convertToType(returnObj[prop.name], prop.type);
+                        }
                     });
 
                     objects.push(returnObj);
@@ -48,6 +52,17 @@ define([
 
                 environment.return('objects', objects);
                 environment.done();
+
+
+                // -------------------
+                function convertToType(value, type) {
+                    if (type === 'number') {
+                        return Number(value);
+                    }
+                    else {
+                        throw new Error('unknown type! :' + type);
+                    }
+                }
             }
         });
     });

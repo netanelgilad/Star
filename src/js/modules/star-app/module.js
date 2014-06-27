@@ -7,9 +7,10 @@
  */
 define([
     'angular',
-    'angular-ui-select2'
+    'angular-ui-select2',
+    'elasticsearch'
 ], function (ng) {
     'use strict';
 
-    return ng.module('starApp', ['ui.select2']);
+    return ng.module('starApp', ['ui.select2', 'elasticsearch']);
 });

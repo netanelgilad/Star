@@ -7,7 +7,7 @@ define([
 ], function(module) {
     module.run(function(processesService) {
         processesService.registerProcess({
-            name: 'getTorrentOfLastEpisodeOfATVShow',
+            'name' : 'downloadTorrentOfLastEpisodeOfATVShow',
             description : 'Find the torrent with the max seeders of a last episode of a series.',
             parameters : [
                 {
@@ -36,48 +36,17 @@ define([
                     {
                         type: 'connection',
                         from : 'episodeTitle',
-                        to : 'sourceString'
-                    },
-                    {
-                        type : 'fixed',
-                        value : 'Season ',
-                        to : 'stringToReplace'
-                    },
-                    {
-                        type : 'fixed',
-                        value : 'S0',
-                        to : 'stringToInsert'
+                        to : 'episodeTitle'
                     }
                 ],
                 {
                     type : 'task',
-                    executeable : 'stringReplace'
-                },
-                [
-                    {
-                        type : 'connection',
-                        from : 'replacedString',
-                        to : 'sourceString'
-                    },
-                    {
-                        type: 'fixed',
-                        value : ' Episode ',
-                        to : 'stringToReplace'
-                    },
-                    {
-                        type : 'fixed',
-                        value : 'E',
-                        to : 'stringToInsert'
-                    }
-                ],
-                {
-                    type : 'task',
-                    executeable : 'stringReplace'
+                    executeable : 'canonizeEpisodeTitle'
                 },
                 [
                     {
                         type : 'toMemory',
-                        from : 'replacedString',
+                        from : 'canonizedEpisodeTitle',
                         to : 'fullEpisodeString'
                     },
                     {
@@ -236,7 +205,8 @@ define([
                             },
                             {
                                 name : 'seeders',
-                                selector : '.seeders'
+                                selector : '.seeders',
+                                type : 'number'
                             },
                             {
                                 name : 'url',

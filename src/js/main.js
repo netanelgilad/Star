@@ -16,7 +16,8 @@ requirejs.config({
         '_': '../lib/lodash/dist/lodash',
         'jquery': '../lib/jquery/jquery',
         'angular-bootstrap':'../lib/angular-bootstrap/ui-bootstrap',
-        'angular-bootstrap-tmpls': '../lib/angular-bootstrap/ui-bootstrap-tpls'
+        'angular-bootstrap-tmpls': '../lib/angular-bootstrap/ui-bootstrap-tpls',
+        'elasticsearch' : '../lib/elasticsearch/elasticsearch.angular'
     },
 
     /**
@@ -45,7 +46,8 @@ requirejs.config({
         },
         'angular-bootstrap':{
             deps:['angular', 'jquery', 'angular-bootstrap-tmpls']
-        }
+        },
+        'elasticsearch' : ['angular']
     },
 
     deps: [

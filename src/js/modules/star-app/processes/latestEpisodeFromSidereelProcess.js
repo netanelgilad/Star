@@ -7,7 +7,7 @@ define([
 ], function(module) {
     module.run(function(processesService) {
         processesService.registerProcess({
-            name: 'findLatestEpisodeOfATvShowUsingSidereel',
+            'name': 'findLatestEpisodeOfATvShowUsingSidereel',
             description : 'Find the latest episode of a tv show using Sidereel.',
             parameters : [
                 {
@@ -25,43 +25,54 @@ define([
                     {
                         type : 'parameters',
                         from : 'tvShow',
-                        to : 'stringToCapitalize'
+                        to : 'searchTerm'
                     }
                 ],
                 {
-                    type : 'task',
-                    executeable: 'capitalizeWords'
+                    type : 'process',
+                    executeable: 'searchInSidereel'
                 },
                 [
                     {
                         type : 'connection',
-                        from : 'capitalizedString',
-                        to : 'sourceString'
+                        from : 'searchResults',
+                        to : 'collection'
                     },
                     {
                         type : 'fixed',
-                        value : ' ',
-                        to : 'stringToReplace'
-                    },
-                    {
-                        type : 'fixed',
-                        value : '_',
-                        to : 'stringToInsert'
+                        value : 0,
+                        to : 'index'
                     }
                 ],
                 {
                     type : 'task',
-                    executeable : 'stringReplace'
+                    executeable : 'getByIndex'
+                },
+                [
+                    {
+                        type : 'connection',
+                        from : 'element',
+                        to : 'object'
+                    },
+                    {
+                        type : 'fixed',
+                        value : 'url',
+                        to : 'propertyName'
+                    }
+                ],
+                {
+                    type : 'task',
+                    executeable : 'getProperty'
                 },
                 [
                     {
                         type : 'fixed',
-                        value : 'http://www.sidereel.com/',
+                        value : 'http://www.sidereel.com',
                         to : 'firstString'
                     },
                     {
                         type : 'connection',
-                        from : 'replacedString',
+                        from : 'property',
                         to : 'secondString'
                     }
                 ],
@@ -88,18 +99,18 @@ define([
                     },
                     {
                         type : 'fixed',
-                        value : '#episode-selector li:nth-last-child(1) .episode-label a',
+                        value : '#episode-selector li .episode-text',
                         to : 'cssSelection'
                     },
                     {
                         type : 'fixed',
-                        value : 'first',
+                        value : 'all',
                         to : 'selectionOption'
                     },
                     {
                         type : 'fixed',
                         value : true,
-                        to : 'inner'
+                        to : 'false'
                     }
                 ],
                 {
@@ -108,8 +119,67 @@ define([
                 },
                 [
                     {
+                        type : 'connection',
+                        from : 'allSelectedHTML',
+                        to : 'HTMLStrings'
+                    },
+                    {
+                        type : 'fixed',
+                        value : [
+                            {
+                                name : 'title',
+                                selector : 'div.episode-label a'
+                            },
+                            {
+                                name : 'airDate',
+                                selector : 'div.episode-air-date'
+                            }
+                        ],
+                        to : 'config'
+                    }
+                ],
+                {
+                    type : 'task',
+                    executeable : 'htmlsToObjects'
+                },
+                [
+                    {
+                        type : 'connection',
+                        from : 'objects',
+                        to : 'collection'
+                    },
+                    {
+                        type : 'fixed',
+                        value : function(item) {
+                            return new Date(item["airDate"]) < new Date();
+                        },
+                        to : 'condition'
+                    }
+                ],
+                {
+                    type : 'task',
+                    executeable : 'findLast'
+                },
+                [
+                    {
+                        type : 'connection',
+                        from : 'lastElements',
+                        to : 'object'
+                    },
+                    {
+                        type : 'fixed',
+                        value : 'title',
+                        to : 'propertyName'
+                    }
+                ],
+                {
+                    type : 'task',
+                    executeable : 'getProperty'
+                },
+                [
+                    {
                         type : 'return',
-                        from : 'selectedHTML',
+                        from : 'property',
                         to : 'episodeTitle'
                     }
                 ]

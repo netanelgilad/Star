@@ -12,25 +12,11 @@ define([
         $scope.obj = {};
 
         $scope.do = function () {
-            processesService.executeProcess('getTorrentOfLastEpisodeOfATVShow', { tvShow : 'parenthood' });
+            processesService.executeProcess('downloadTorrentOfLastEpisodeOfATVShow', { tvShow : $scope.myText });
         };
 
-        $scope.that = function() {
-
-            var meSpeak = require("mespeak");
-
-//Select english/american voice
-            meSpeak.loadVoice(require("mespeak/voices/en/en-us.json"));
-
-//Play a sound
-            var data = meSpeak.speak($scope.myText, {rawdata: "mime"});
-
-           // var blob = new Blob(data, {type: "audio/ogg"});
-         //   var url = URL.createObjectURL(blob);
-        //    audio.src = url;
-            var audioElement = document.createElement('audio');
-            audioElement.setAttribute('src', data);
-            audioElement.setAttribute('autoplay', 'autoplay');
-        };
+        $scope.create = function() {
+            processesService.addProcess();
+        }
     });
 });

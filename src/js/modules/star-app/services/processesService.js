@@ -7,12 +7,24 @@ define([
     'jquery',
     './tasksService',
     './dependenciesService',
-    './adaptersService'
+    './adaptersService',
+    './searchService'
 ], function(module, Environment) {
-    module.service('processesService', function(tasksService, dependenciesService, adaptersService, $q) {
+    module.service('processesService', function(tasksService, dependenciesService, adaptersService, $q, searchService) {
         this.processes = {};
 
         this.registerProcess = function(process) {
+            searchService.update({
+                index : 'star',
+                type : 'process',
+                id : process.name,
+                body : {
+                    doc : process,
+                    doc_as_upsert : true
+                }
+            }, function(error, response) {
+                console.log(response.error);
+            });
             this.processes[process.name] = process;
         };
 
@@ -132,6 +144,7 @@ define([
                     }
 
                     executionPromise.then(function(result) {
+                        console.log('Result of ' + currentExecutable.executeable + ':');
                         console.log(JSON.stringify(result, null, 2));
                         lastReturn = result;
 

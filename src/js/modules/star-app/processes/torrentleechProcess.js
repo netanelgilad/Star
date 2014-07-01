@@ -182,7 +182,7 @@ define([
                     },
                     {
                         type : 'fixed',
-                        value : false,
+                        value : 'false',
                         to : 'inner'
                     }
                 ],
